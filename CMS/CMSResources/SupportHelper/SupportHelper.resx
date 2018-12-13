@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1">this is my long string</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        [base64 mime encoded serialized .NET Framework object]
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        [base64 mime encoded string representing a byte array form of the .NET Framework object]
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="support.attach.deleteconfirmation" xml:space="preserve">
+    <value>Are you sure you want to remove this related file?</value>
+  </data>
+  <data name="support.attach.deleted" xml:space="preserve">
+    <value>The file was removed.</value>
+  </data>
+  <data name="support.attach.newattachment" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="support.attach.nodatafound" xml:space="preserve">
+    <value>Screenshots, code files, sample data, logs, etc.</value>
+  </data>
+  <data name="support.category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="support.category.admin" xml:space="preserve">
+    <value>Administration interface</value>
+  </data>
+  <data name="support.category.blogs" xml:space="preserve">
+    <value>Blogs</value>
+  </data>
+  <data name="support.category.campaigns" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="support.category.contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="support.category.cssjavascript" xml:space="preserve">
+    <value>CSS or JavaScript</value>
+  </data>
+  <data name="support.category.custom" xml:space="preserve">
+    <value>Unlisted or unknown category</value>
+  </data>
+  <data name="support.category.custom.placeholder" xml:space="preserve">
+    <value>Descriptive category name</value>
+  </data>
+  <data name="support.category.custom.validation" xml:space="preserve">
+    <value>Custom category is empty.</value>
+  </data>
+  <data name="support.category.discounts" xml:space="preserve">
+    <value>Product discounts </value>
+  </data>
+  <data name="support.category.events" xml:space="preserve">
+    <value>Events and booking</value>
+  </data>
+  <data name="support.category.formcontrols" xml:space="preserve">
+    <value>Form controls</value>
+  </data>
+  <data name="support.category.forms" xml:space="preserve">
+    <value>On-line forms</value>
+  </data>
+  <data name="support.category.forums" xml:space="preserve">
+    <value>Forums</value>
+  </data>
+  <data name="support.category.header.application" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="support.category.header.choose" xml:space="preserve">
+    <value>Choose a category...</value>
+  </data>
+  <data name="support.category.header.configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="support.category.header.content" xml:space="preserve">
+    <value>Content management</value>
+  </data>
+  <data name="support.category.header.development" xml:space="preserve">
+    <value>Development</value>
+  </data>
+  <data name="support.category.header.ecommerce" xml:space="preserve">
+    <value>E-commerce</value>
+  </data>
+  <data name="support.category.header.om" xml:space="preserve">
+    <value>Online marketing</value>
+  </data>
+  <data name="support.category.header.social" xml:space="preserve">
+    <value>Social &amp; Community</value>
+  </data>
+  <data name="support.category.integrations" xml:space="preserve">
+    <value>Integrations (REST, SharePoint, etc.)</value>
+  </data>
+  <data name="support.category.label" xml:space="preserve">
+    <value>Category of issue</value>
+  </data>
+  <data name="support.category.localization" xml:space="preserve">
+    <value>Localization and translations</value>
+  </data>
+  <data name="support.category.medialibraries" xml:space="preserve">
+    <value>Media libraries</value>
+  </data>
+  <data name="support.category.modules" xml:space="preserve">
+    <value>Modules or Kentico API</value>
+  </data>
+  <data name="support.category.mvc" xml:space="preserve">
+    <value>MVC integration</value>
+  </data>
+  <data name="support.category.newsletters" xml:space="preserve">
+    <value>Newsletters</value>
+  </data>
+  <data name="support.category.orders" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="support.category.pages" xml:space="preserve">
+    <value>Page management</value>
+  </data>
+  <data name="support.category.permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="support.category.products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="support.category.sites" xml:space="preserve">
+    <value>Site management</value>
+  </data>
+  <data name="support.category.spacer" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="support.category.staging" xml:space="preserve">
+    <value>Staging</value>
+  </data>
+  <data name="support.category.store" xml:space="preserve">
+    <value>Store configuration</value>
+  </data>
+  <data name="support.category.upgrade" xml:space="preserve">
+    <value>Upgrade or hotfix</value>
+  </data>
+  <data name="support.category.users" xml:space="preserve">
+    <value>Users and authentication</value>
+  </data>
+  <data name="support.category.validation" xml:space="preserve">
+    <value>Category is not a valid option.</value>
+  </data>
+  <data name="support.category.webfarm" xml:space="preserve">
+    <value>Web farm</value>
+  </data>
+  <data name="support.category.webparts" xml:space="preserve">
+    <value>Web parts</value>
+  </data>
+  <data name="support.category.workflows" xml:space="preserve">
+    <value>Workflows</value>
+  </data>
+  <data name="support.description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="support.description.example" xml:space="preserve">
+    <value>For example, are there steps that you took that led to this issue?</value>
+  </data>
+  <data name="support.description.label" xml:space="preserve">
+    <value>Describe the issue in as much detail as you can so that we can assist you faster and more precisely.</value>
+  </data>
+  <data name="support.deselectallconfirmation" xml:space="preserve">
+    <value>Are you sure you want to clear all metrics under this category?</value>
+  </data>
+  <data name="support.email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="support.email.label" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
+  <data name="support.email.placeholder" xml:space="preserve">
+    <value>Email(s) in the format name@domain.com</value>
+  </data>
+  <data name="support.files" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="support.files.label" xml:space="preserve">
+    <value>Add any related files</value>
+  </data>
+  <data name="support.metric.add.title" xml:space="preserve">
+    <value>Add new custom metric</value>
+  </data>
+  <data name="support.metric.codename" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="support.metric.dataclass" xml:space="preserve">
+    <value>Data class</value>
+  </data>
+  <data name="support.metric.edit.dataclass" xml:space="preserve">
+    <value>Data class</value>
+  </data>
+  <data name="support.metric.edit.parent" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="support.metric.edit.selected" xml:space="preserve">
+    <value>Selected by default</value>
+  </data>
+  <data name="support.metric.edit.title" xml:space="preserve">
+    <value>Edit custom metric</value>
+  </data>
+  <data name="support.metric.parent" xml:space="preserve">
+    <value>Metric category</value>
+  </data>
+  <data name="support.metric.selected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="support.metrics" xml:space="preserve">
+    <value>Available metrics</value>
+  </data>
+  <data name="support.metrics.counters" xml:space="preserve">
+    <value>Counters</value>
+  </data>
+  <data name="support.metrics.counters.activities" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="support.metrics.counters.contactgroups" xml:space="preserve">
+    <value>Contact groups</value>
+  </data>
+  <data name="support.metrics.counters.contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="support.metrics.counters.medialibraries" xml:space="preserve">
+    <value>Media libraries</value>
+  </data>
+  <data name="support.metrics.counters.modules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
+  <data name="support.metrics.counters.omrules" xml:space="preserve">
+    <value>Online marketing rules</value>
+  </data>
+  <data name="support.metrics.counters.pagemostchildren" xml:space="preserve">
+    <value>Page with most children</value>
+  </data>
+  <data name="support.metrics.counters.products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="support.metrics.counters.stagingservers" xml:space="preserve">
+    <value>Staging servers</value>
+  </data>
+  <data name="support.metrics.counters.webfarmservers" xml:space="preserve">
+    <value>Web farm servers</value>
+  </data>
+  <data name="support.metrics.ecommerce" xml:space="preserve">
+    <value>Ecommerce</value>
+  </data>
+  <data name="support.metrics.environment" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="support.metrics.environment.amazon" xml:space="preserve">
+    <value>Amazon settings</value>
+  </data>
+  <data name="support.metrics.environment.azure" xml:space="preserve">
+    <value>Azure settings</value>
+  </data>
+  <data name="support.metrics.environment.https" xml:space="preserve">
+    <value>HTTPS</value>
+  </data>
+  <data name="support.metrics.environment.iisversion" xml:space="preserve">
+    <value>IIS version</value>
+  </data>
+  <data name="support.metrics.environment.netversion" xml:space="preserve">
+    <value>.NET Framework version</value>
+  </data>
+  <data name="support.metrics.environment.services" xml:space="preserve">
+    <value>Windows services</value>
+  </data>
+  <data name="support.metrics.environment.sqlserverversion" xml:space="preserve">
+    <value>SQL Server version</value>
+  </data>
+  <data name="support.metrics.environment.trustlevel" xml:space="preserve">
+    <value>Trust level</value>
+  </data>
+  <data name="support.metrics.environment.windowsversion" xml:space="preserve">
+    <value>Server version</value>
+  </data>
+  <data name="support.metrics.eventlog" xml:space="preserve">
+    <value>Event log</value>
+  </data>
+  <data name="support.metrics.eventlog.contenterrors" xml:space="preserve">
+    <value>Content errors</value>
+  </data>
+  <data name="support.metrics.eventlog.exceptions" xml:space="preserve">
+    <value>Exceptions</value>
+  </data>
+  <data name="support.metrics.eventlog.macroerrors" xml:space="preserve">
+    <value>Macro errors</value>
+  </data>
+  <data name="support.metrics.eventlog.searcherrors" xml:space="preserve">
+    <value>Search errors</value>
+  </data>
+  <data name="support.metrics.eventlog.stagingerrors" xml:space="preserve">
+    <value>Staging errors</value>
+  </data>
+  <data name="support.metrics.eventlog.upgrade" xml:space="preserve">
+    <value>Upgrade events</value>
+  </data>
+  <data name="support.metrics.flyclose" xml:space="preserve">
+    <value>&lt;strong&gt;Hide metrics&lt;/strong&gt;</value>
+  </data>
+  <data name="support.metrics.flyopen" xml:space="preserve">
+    <value>&lt;strong&gt;Advanced (metrics)&lt;/strong&gt;</value>
+  </data>
+  <data name="support.metrics.invalid" xml:space="preserve">
+    <value>{0} ({1}) returned null data.</value>
+  </data>
+  <data name="support.metrics.system" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="support.metrics.system.appname" xml:space="preserve">
+    <value>Application name</value>
+  </data>
+  <data name="support.metrics.system.apppath" xml:space="preserve">
+    <value>Application path</value>
+  </data>
+  <data name="support.metrics.system.authmode" xml:space="preserve">
+    <value>Authentication mode</value>
+  </data>
+  <data name="support.metrics.system.debugmode" xml:space="preserve">
+    <value>Debug mode</value>
+  </data>
+  <data name="support.metrics.system.discoveredassemblies" xml:space="preserve">
+    <value>Discovered assemblies</value>
+  </data>
+  <data name="support.metrics.system.installtype" xml:space="preserve">
+    <value>Installation</value>
+  </data>
+  <data name="support.metrics.system.instancename" xml:space="preserve">
+    <value>Instance name</value>
+  </data>
+  <data name="support.metrics.system.physicalpath" xml:space="preserve">
+    <value>Physical path</value>
+  </data>
+  <data name="support.metrics.system.portaltemplatepage" xml:space="preserve">
+    <value>Portal template</value>
+  </data>
+  <data name="support.metrics.system.runallmanagedmodules" xml:space="preserve">
+    <value>Run all managed modules</value>
+  </data>
+  <data name="support.metrics.system.sessionmode" xml:space="preserve">
+    <value>Session mode</value>
+  </data>
+  <data name="support.metrics.system.targetframework" xml:space="preserve">
+    <value>Target framework</value>
+  </data>
+  <data name="support.metrics.system.timesinceapprestart" xml:space="preserve">
+    <value>Time since application restart</value>
+  </data>
+  <data name="support.metrics.system.uiculture" xml:space="preserve">
+    <value>UI Culture</value>
+  </data>
+  <data name="support.metrics.system.version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="support.metrics.tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="support.metrics.tasks.email" xml:space="preserve">
+    <value>Email tasks</value>
+  </data>
+  <data name="support.metrics.tasks.integration" xml:space="preserve">
+    <value>Integration tasks</value>
+  </data>
+  <data name="support.metrics.tasks.scheduled" xml:space="preserve">
+    <value>Scheduled tasks</value>
+  </data>
+  <data name="support.metrics.tasks.search" xml:space="preserve">
+    <value>Search tasks</value>
+  </data>
+  <data name="support.metrics.tasks.staging" xml:space="preserve">
+    <value>Staging tasks</value>
+  </data>
+  <data name="support.metrics.tasks.webfarm" xml:space="preserve">
+    <value>Web farm tasks</value>
+  </data>
+  <data name="support.metrics.warning" xml:space="preserve">
+    <value>If some important metrics are disabled, it might take longer to troubleshoot your issue.</value>
+  </data>
+  <data name="support.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="support.name.label" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="support.name.placeholder" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="support.organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="support.organization.label" xml:space="preserve">
+    <value>Contact organization</value>
+  </data>
+  <data name="support.organization.placeholder" xml:space="preserve">
+    <value>Organization name</value>
+  </data>
+  <data name="support.submit" xml:space="preserve">
+    <value>Submit request</value>
+  </data>
+  <data name="support.success" xml:space="preserve">
+    <value>Thank you for your submission! We have received it and you will get a reply according to our policy.</value>
+  </data>
+  <data name="support.title" xml:space="preserve">
+    <value>Submit support issue</value>
+  </data>
+  <data name="support.ui.custommetric.noclasses" xml:space="preserve">
+    <value>To be able to create custom metrics, define at least one class implementing the &lt;strong&gt;SupportHelper.ICustomMetric&lt;/strong&gt; interface in a &lt;a href="http://kentico.com/CMSPages/DocLinkMapper.ashx?version=11.0&amp;link=custom_modules"&gt;custom module&lt;/a&gt;.</value>
+  </data>
+  <data name="support.ui.custommetrics.description" xml:space="preserve">
+    <value>Custom metrics are metrics that are added to &lt;strong&gt;Support helper&lt;/strong&gt; submissions using a custom class.</value>
+  </data>
+  <data name="support.ui.description" xml:space="preserve">
+    <value>Allows you to fill out a support form. You can add a description and files. The submission also contains information about this Kentico instance.</value>
+  </data>
+  <data name="support.ui.tip" xml:space="preserve">
+    <value>&lt;strong&gt;Troubleshooting tips:&lt;/strong&gt;&lt;br /&gt;
+&lt;ul&gt;
+&lt;li&gt;If you have found a bug, try to apply the latest &lt;a href="http://devnet.kentico.com/download/hotfixes/"&gt;hotfix&lt;/a&gt; first. Kentico's 7-day bug-fix policy ensures that all bugs found by Kentico users are fixed within a week through hotfixes.&lt;/li&gt;
+&lt;li&gt;If you are struggling with Kentico API or administrating your site, check out the detailed &lt;a href="http://devnet.kentico.com/documentation"&gt;Kentico documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Did you know Kentico has an active community of developers? Find &lt;a href="http://devnet.kentico.com/questions-answers"&gt;questions and answers&lt;/a&gt; from other users or ask a question yourself.&lt;/li&gt;
+&lt;li&gt;Kentico's &lt;a href="http://devnet.kentico.com/download/learning-materials"&gt;Guides &amp;amp; Learning Materials&lt;/a&gt; are packed with informative material published by Kentico professionals. Find exactly what you are looking for!&lt;/li&gt;
+&lt;li&gt;Are you looking for a feature that is not available yet? Tell Kentico about it! &lt;a target="_blank" href="http://kentico.uservoice.com"&gt;Suggest a new feature&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;</value>
+  </data>
+  <data name="support.url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="support.url.label" xml:space="preserve">
+    <value>Public URL showing issue</value>
+  </data>
+  <data name="support.url.placeholder" xml:space="preserve">
+    <value>Public URL</value>
+  </data>
+  <data name="support.url.validation" xml:space="preserve">
+    <value>Please enter a valid URL.</value>
+  </data>
+  <data name="support.validation.custommetric.parent" xml:space="preserve">
+    <value>Please choose a category.</value>
+  </data>
+  <data name="support.validation.invaliddata" xml:space="preserve">
+    <value>Invalid submission data passed.</value>
+  </data>
+  <data name="support.ui.custommetrics" xml:space="preserve">
+    <value>Custom metrics</value>
+  </data>
+</root>

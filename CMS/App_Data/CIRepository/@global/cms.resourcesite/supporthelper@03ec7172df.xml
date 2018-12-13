@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.resourcesite>
+  <Parent>
+    <CodeName>SupportHelper</CodeName>
+    <GUID>9e6abd70-3228-400d-9fe5-57c31d3df705</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </Parent>
+  <Bindings>
+    <Binding id="DancingGoat">
+      <SiteID>
+        <CodeName>DancingGoat</CodeName>
+        <GUID>c1983014-7435-42b5-ad1d-c442f4882c45</GUID>
+        <ObjectType>cms.site</ObjectType>
+      </SiteID>
+    </Binding>
+  </Bindings>
+</cms.resourcesite>
