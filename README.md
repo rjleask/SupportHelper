@@ -74,10 +74,10 @@ Support helper includes several optional settings that can change how it is used
   11. Click **Add new custom metric** and fill out the form. The metric that you created should be in the **Data class** selector. The **Category** field selects the metric category that you want to include the metric under, as shown in the submission form or listed in the submission data.
   12. The metric should now appear in the submission form after clicking **Advanced (metrics)**.
 - **Disabled metrics** – By default, all the metrics in Support helper are selected. To disable one or more metrics, add the following key into the _AppSettings_ section of your project's _web.config_ file:
-      ```xml
-      <add key="SHDisabledMetrics" value="metric1;metric2"/>
-      ```
-* Replace _metric1;metric2_ with the metric code names separated by semicolons (;) that you want to disable. You can find the default metric code names in the _SupportHelper\_MetricCodeNames.txt_ file.
+  ```xml
+  <add key="SHDisabledMetrics" value="metric1;metric2"/>
+  ```
+  * Replace _metric1;metric2_ with the metric code names separated by semicolons (;) that you want to disable. You can find the default metric code names in the _SupportHelper\_MetricCodeNames.txt_ file.
 - **Log submission** – Support helper allows the submission data (except for attachments) to be logged to the **Event log** as well as sent to the destination server. To log the submission data, add the following key into the _AppSettings_ section of your project's _web.config_ file:
   ```xml
   <add key="SHLogSubmission" value="true"/>
