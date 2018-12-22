@@ -501,7 +501,7 @@
     <value>Submit support issue</value>
   </data>
   <data name="support.ui.custommetric.noclasses" xml:space="preserve">
-    <value>To be able to create custom metrics, define at least one class implementing the &lt;strong&gt;SupportHelper.ICustomMetric&lt;/strong&gt; interface in a &lt;a href="http://kentico.com/CMSPages/DocLinkMapper.ashx?version=10.0&amp;link=custom_modules"&gt;custom module&lt;/a&gt;.</value>
+    <value>To be able to create custom metrics, define at least one class implementing the &lt;strong&gt;SupportHelper.ICustomMetric&lt;/strong&gt; interface in a &lt;a href="http://kentico.com/CMSPages/DocLinkMapper.ashx?version=11.0&amp;link=custom_modules"&gt;custom module&lt;/a&gt;.</value>
   </data>
   <data name="support.ui.custommetrics.description" xml:space="preserve">
     <value>Custom metrics are metrics that are added to &lt;strong&gt;Support helper&lt;/strong&gt; submissions using a custom class.</value>

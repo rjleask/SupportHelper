@@ -11,6 +11,7 @@ using CMS.Base;
 using CMS.ContactManagement;
 using CMS.Core;
 using CMS.DataEngine;
+using CMS.DataEngine.Query;
 using CMS.Ecommerce;
 using CMS.EmailEngine;
 using CMS.EventLog;
@@ -259,7 +260,7 @@ namespace SupportHelper
 					stringData = CoreServices.WebFarm.GetEnabledServerNames().Count().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_stagingservers:
-					stringData = ServerInfoProvider.GetServers().Count().ToString();
+					stringData = ServerInfoProvider.GetServers().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_pagemostchildren:
 					CMS.DocumentEngine.TreeProvider tree = new CMS.DocumentEngine.TreeProvider();
@@ -271,25 +272,25 @@ namespace SupportHelper
 					tupleData = new[] { GetKeyValuePair(URLHelper.GetAbsoluteUrl("~" + pageWithMostChildren.Key.NodeAliasPath), pageWithMostChildren.Value) };
 					break;
 				case MetricDataEnum.support_metrics_counters_modules:
-					stringData = ResourceInfoProvider.GetCount().ToString();
+					stringData = ResourceInfoProvider.GetResources().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_medialibraries:
-					stringData = MediaLibraryInfoProvider.GetCount(w => w.WhereNull("LibraryGroupID")).ToString();
+					stringData = MediaLibraryInfoProvider.GetMediaLibraries().WhereNull("LibraryGroupID").GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_activities:
-					stringData = ActivityInfoProvider.GetCount().ToString();
+					stringData = ActivityInfoProvider.GetActivities().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_contacts:
-					stringData = ContactInfoProvider.GetCount().ToString();
+					stringData = ContactInfoProvider.GetContacts().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_contactgroups:
-					stringData = ContactGroupInfoProvider.GetCount().ToString();
+					stringData = ContactGroupInfoProvider.GetContactGroups().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_omrules:
-					stringData = RuleInfoProvider.GetCount().ToString();
+					stringData = RuleInfoProvider.GetRules().GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_counters_products:
-					stringData = SKUInfoProvider.GetSKUs(SiteContext.CurrentSiteID).WhereNull("SKUOptionCategoryID").Count().ToString();
+					stringData = SKUInfoProvider.GetSKUs(SiteContext.CurrentSiteID).WhereNull("SKUOptionCategoryID").GetCount().ToString();
 					break;
 
 				#endregion
@@ -299,28 +300,28 @@ namespace SupportHelper
 				case MetricDataEnum.support_metrics_tasks_webfarm:
 					stringData = WebFarmTaskInfoProvider.GetWebFarmTasks()
 						   .WhereLessThan("TaskCreated", DateTime.Now.AddDays(-1))
-						   .Count().ToString();
+						   .GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_tasks_staging:
 					stringData = StagingTaskInfoProvider.GetTasks()
 						   .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
-						   .Count().ToString();
+						   .GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_tasks_integration:
 					stringData = IntegrationTaskInfoProvider.GetIntegrationTasks()
 						   .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
-						   .Count().ToString();
+						   .GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_tasks_scheduled:
 					stringData = TaskInfoProvider.GetTasks()
 							.WhereTrue("TaskDeleteAfterLastRun")
 						   .WhereLessThan("TaskNextRunTime", DateTime.Now.AddDays(-1))
-						   .Count().ToString();
+						   .GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_tasks_search:
 					stringData = SearchTaskInfoProvider.GetSearchTasks()
 						   .WhereLessThan("SearchTaskCreated", DateTime.Now.AddDays(-1))
-						   .Count().ToString();
+						   .GetCount().ToString();
 					break;
 				case MetricDataEnum.support_metrics_tasks_email:
 					stringData = EmailInfoProvider.GetEmailCount("EmailStatus = 1 AND EmailLastSendResult IS NOT NULL").ToString();

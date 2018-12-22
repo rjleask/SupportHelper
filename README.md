@@ -1,2 +1,2 @@
 # SupportHelper
-This is the version 10 branch. See the master branch for detailed documentation.
+This is the version 11 branch. See the master branch for detailed documentation.

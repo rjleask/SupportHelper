@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C827EF8-B697-4D39-9EFD-058EA0E94261}</ProjectGuid>
+    <ProjectGuid>{2B0D08B0-CDA9-4DE9-B357-F38202C0207B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SupportHelperSampleMetric</RootNamespace>
     <AssemblyName>SupportHelperSampleMetric</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SupportHelper\SupportHelper.csproj">
-      <Project>{EFF1371B-6EAC-43E9-8C11-620CDE14BDF5}</Project>
+      <Project>{42598778-CFB3-4ABF-B1CD-7B052DB9B4BF}</Project>
       <Name>SupportHelper</Name>
     </ProjectReference>
   </ItemGroup>

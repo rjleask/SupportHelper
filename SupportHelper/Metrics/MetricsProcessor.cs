@@ -236,7 +236,7 @@ namespace SupportHelper
 
 			// List of key value fields
 			return keyValuePairs.ToDictionary(kv => kv.Key, kv => kv.Value);
-		}
+		} 
 
 		#endregion
 	}

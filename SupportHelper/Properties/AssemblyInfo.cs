@@ -22,7 +22,7 @@ using CMS;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("eff1371b-6eac-43e9-8c11-620cde14bdf5")]
+[assembly: Guid("42598778-cfb3-4abf-b1cd-7b052db9b4bf")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,5 +34,5 @@ using CMS;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.10.0")]
-[assembly: AssemblyFileVersion("1.10.0")]
+[assembly: AssemblyVersion("1.11.0")]
+[assembly: AssemblyFileVersion("1.11.0")]

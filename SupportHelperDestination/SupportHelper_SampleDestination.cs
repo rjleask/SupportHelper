@@ -63,8 +63,8 @@ public class SubmitController : ApiController
 		var category = metricsProcessor.GetMetric<string>(MetricsProcessor.Category.Form, "support.category");
 		var email = metricsProcessor.GetMetric<string>(MetricsProcessor.Category.Form, "support.email");
 
-        string from;
-        string cc;
+		string from;
+		string cc;
 		GetEmails(email, out from, out cc);
 
 		var subject = String.Format(SUBJECT_FORMAT, version, category);

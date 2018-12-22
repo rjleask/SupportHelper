@@ -17,10 +17,8 @@ namespace SupportHelper
 	[Serializable]
 	public partial class CustomMetricInfo : AbstractInfo<CustomMetricInfo>
 	{
-		#region "Type information"
-
 		/// <summary>
-		/// Object type
+		/// Object type.
 		/// </summary>
 		public const string OBJECT_TYPE = "supporthelper.custommetric";
 
@@ -28,19 +26,15 @@ namespace SupportHelper
 		/// <summary>
 		/// Type information.
 		/// </summary>
-		public static ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(CustomMetricInfoProvider), OBJECT_TYPE, "SupportHelper.CustomMetric", "CustomMetricID", null, null, "CustomMetricCodeName", "CustomMetricDisplayName", null, null, null, null)
+		public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(CustomMetricInfoProvider), OBJECT_TYPE, "SupportHelper.CustomMetric", "CustomMetricID", null, null, "CustomMetricCodeName", "CustomMetricDisplayName", null, null, null, null)
 		{
 			ModuleName = "SupportHelper",
 			TouchCacheDependencies = true,
 		};
 
-		#endregion
-
-
-		#region "Properties"
 
 		/// <summary>
-		/// Custom metric ID
+		/// Custom metric ID.
 		/// </summary>
 		[DatabaseField]
 		public virtual int CustomMetricID
@@ -57,7 +51,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric display name
+		/// Custom metric display name.
 		/// </summary>
 		[DatabaseField]
 		public virtual string CustomMetricDisplayName
@@ -74,7 +68,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric code name
+		/// Custom metric code name.
 		/// </summary>
 		[DatabaseField]
 		public virtual string CustomMetricCodeName
@@ -91,7 +85,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric assembly name
+		/// Custom metric assembly name.
 		/// </summary>
 		[DatabaseField]
 		public virtual string CustomMetricAssemblyName
@@ -108,7 +102,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric class name
+		/// Custom metric class name.
 		/// </summary>
 		[DatabaseField]
 		public virtual string CustomMetricClassName
@@ -125,7 +119,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric parent
+		/// Custom metric parent.
 		/// </summary>
 		[DatabaseField]
 		public virtual string CustomMetricParent
@@ -142,7 +136,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Custom metric selected
+		/// Custom metric selected.
 		/// </summary>
 		[DatabaseField]
 		public virtual bool CustomMetricSelected
@@ -157,10 +151,6 @@ namespace SupportHelper
 			}
 		}
 
-		#endregion
-
-
-		#region "Type based properties and methods"
 
 		/// <summary>
 		/// Deletes the object using appropriate provider.
@@ -179,16 +169,12 @@ namespace SupportHelper
 			CustomMetricInfoProvider.SetCustomMetricInfo(this);
 		}
 
-		#endregion
-
-
-		#region "Constructors"
 
 		/// <summary>
 		/// Constructor for de-serialization.
 		/// </summary>
-		/// <param name="info">Serialization info</param>
-		/// <param name="context">Streaming context</param>
+		/// <param name="info">Serialization info.</param>
+		/// <param name="context">Streaming context.</param>
 		protected CustomMetricInfo(SerializationInfo info, StreamingContext context)
 			: base(info, context, TYPEINFO)
 		{
@@ -196,7 +182,7 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Constructor - Creates an empty CustomMetricInfo object.
+		/// Creates an empty instance of the <see cref="CustomMetricInfo"/> class.
 		/// </summary>
 		public CustomMetricInfo()
 			: base(TYPEINFO)
@@ -205,14 +191,12 @@ namespace SupportHelper
 
 
 		/// <summary>
-		/// Constructor - Creates a new CustomMetricInfo object from the given DataRow.
+		/// Creates a new instances of the <see cref="CustomMetricInfo"/> class from the given <see cref="DataRow"/>.
 		/// </summary>
-		/// <param name="dr">DataRow with the object data</param>
-		protected CustomMetricInfo(DataRow dr)
+		/// <param name="dr">DataRow with the object data.</param>
+		public CustomMetricInfo(DataRow dr)
 			: base(TYPEINFO, dr)
 		{
 		}
-
-		#endregion
 	}
 }

@@ -320,8 +320,6 @@ namespace SupportHelper
 			// Send using HttpClient
 			using (HttpClient client = new HttpClient())
 			{
-				System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
-
 				HttpResponseMessage response = client.PostAsync(Endpoint, submission).Result;
 
 				if (!response.IsSuccessStatusCode)

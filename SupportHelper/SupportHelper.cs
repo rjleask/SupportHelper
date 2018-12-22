@@ -37,7 +37,7 @@ namespace SupportHelper
 				return URLHelper.AppendQuery(URLHelper.GetAbsoluteUrl(PAGE_PATH), QueryHelper.BuildQueryWithHash("application", "true"));
 			}
 		}
-		
+
 		/// <summary>
 		/// URL of Support helper dialog.
 		/// </summary>
@@ -105,6 +105,6 @@ namespace SupportHelper
 			}
 		}
 
-		#endregion		
+		#endregion
 	}
 }
