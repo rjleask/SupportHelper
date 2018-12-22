@@ -9,9 +9,6 @@ using CMS.UIControls;
 
 namespace SupportHelper
 {
-    /// <summary>
-    /// Support helper macro methods container.
-    /// </summary>
 	[RegisterAllProperties]
 	public class SupportHelper : AbstractHierarchicalObject<SupportHelper>
 	{
@@ -40,7 +37,7 @@ namespace SupportHelper
 				return URLHelper.AppendQuery(URLHelper.GetAbsoluteUrl(PAGE_PATH), QueryHelper.BuildQueryWithHash("application", "true"));
 			}
 		}
-
+		
 		/// <summary>
 		/// URL of Support helper dialog.
 		/// </summary>
@@ -108,6 +105,6 @@ namespace SupportHelper
 			}
 		}
 
-		#endregion
+		#endregion		
 	}
 }

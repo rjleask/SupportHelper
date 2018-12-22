@@ -22,7 +22,7 @@ using CMS;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d8a9cdd3-2b31-4e46-9654-31fe85d12173")]
+[assembly: Guid("40a5c799-43ea-4503-b9ec-76f24ec10602")]
 
 // Version information for an assembly consists of the following four values:
 //

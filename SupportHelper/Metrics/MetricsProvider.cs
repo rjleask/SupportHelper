@@ -1,84 +1,78 @@
-﻿using System;
+﻿using CMS.Helpers;
+using CMS.UIControls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
-using CMS.Helpers;
-using CMS.UIControls;
-
 namespace SupportHelper
 {
-    public class MetricsProvider : UniTreeProvider
-    {
-        private Metrics mTree;
+	public class MetricsProvider : UniTreeProvider
+	{
+		private Metrics mTree;
 
-        new public string IDColumn { get { return "MetricId"; } }
+		new public string IDColumn { get { return "MetricId"; } }
+		new public string DisplayNameColumn { get { return "MetricDisplayName"; } }
+		public string ParentColumn { get { return "MetricParent"; } }
+		public string HasChildrenColumn { get { return "MetricHasChildren"; } }
+		public string SelectedColumn { get { return "MetricSelected"; } }
+		new public string PathColumn { get { return "MetricPath"; } }
 
-        new public string DisplayNameColumn { get { return "MetricDisplayName"; } }
+		new public UniTreeNode RootNode
+		{
+			get
+			{
+				UniTreeNode node = new UniTreeNode(this, Convert.ToString(Tree.Rows[0][PathColumn]))
+				{
+					ItemData = Tree.Rows[0]
+				};
 
-        public string ParentColumn { get { return "MetricParent"; } }
+				return node;
+			}
+		}
 
-        public string HasChildrenColumn { get { return "MetricHasChildren"; } }
+		public Metrics Tree
+		{
+			get
+			{
+				if (mTree == null)
+				{
+					throw new NoNullAllowedException("Missing Metrics tree for some reason.");
+				}
 
-        public string SelectedColumn { get { return "MetricSelected"; } }
+				return mTree;
+			}
 
-        new public string PathColumn { get { return "MetricPath"; } }
+			set
+			{
+				mTree = value;
+			}
+		}
 
-        new public UniTreeNode RootNode
-        {
-            get
-            {
-                UniTreeNode node = new UniTreeNode(this, Convert.ToString(Tree.Rows[0][PathColumn]))
-                {
-                    ItemData = Tree.Rows[0]
-                };
+		/// <summary>
+		/// Returns the set of child nodes for the specified node.
+		/// </summary>
+		/// <param name="nodeValue">Parent node value in the format "NodeID_ObjectType"</param>
+		/// <param name="nodeDepth">Specified level</param>
+		new public List<UniTreeNode> GetChildNodes(string nodeValue)
+		{
+			int nodeId = ValidationHelper.GetInteger(nodeValue, 0);
 
-                return node;
-            }
-        }
+			List<UniTreeNode> childNodes = new List<UniTreeNode>();
 
-        public Metrics Tree
-        {
-            get
-            {
-                if (mTree == null)
-                {
-                    throw new NoNullAllowedException("Missing Metrics tree for some reason.");
-                }
+			foreach (Metric metric in Tree.Rows)
+			{
+				if (metric.MetricParent != null && metric.MetricParent.MetricId == nodeId)
+				{
+					UniTreeNode node = new UniTreeNode(this, metric.MetricPath)
+					{
+						ItemData = metric
+					};
 
-                return mTree;
-            }
+					childNodes.Add(node);
+				}
+			}
 
-            set
-            {
-                mTree = value;
-            }
-        }
-
-        /// <summary>
-        /// Returns the set of child nodes for the specified node.
-        /// </summary>
-        /// <param name="nodeValue">Parent node value in the format "NodeID_ObjectType"</param>
-        /// <param name="nodeDepth">Specified level</param>
-        new public List<UniTreeNode> GetChildNodes(string nodeValue)
-        {
-            int nodeId = ValidationHelper.GetInteger(nodeValue, 0);
-
-            List<UniTreeNode> childNodes = new List<UniTreeNode>();
-
-            foreach (Metric metric in Tree.Rows)
-            {
-                if (metric.MetricParent != null && metric.MetricParent.MetricId == nodeId)
-                {
-                    UniTreeNode node = new UniTreeNode(this, metric.MetricPath)
-                    {
-                        ItemData = metric
-                    };
-
-                    childNodes.Add(node);
-                }
-            }
-
-            return childNodes;
-        }
-    }
+			return childNodes;
+		}
+	}
 }

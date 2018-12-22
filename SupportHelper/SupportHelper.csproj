@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{42598778-CFB3-4ABF-B1CD-7B052DB9B4BF}</ProjectGuid>
+    <ProjectGuid>{EFF1371B-6EAC-43E9-8C11-620CDE14BDF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SupportHelper</RootNamespace>
     <AssemblyName>SupportHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,7 +51,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="CMS.DataEngine">
-      <HintPath>..\CMS\Bin\CMS.DataEngine.dll</HintPath>
+      <HintPath>..\CMS\bin\CMS.DataEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CMS.DocumentEngine">
@@ -71,11 +70,12 @@
       <HintPath>..\CMS\Bin\CMS.EventLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CMS.Globalization">
-      <HintPath>..\CMS\Bin\CMS.Globalization.dll</HintPath>
-    </Reference>
     <Reference Include="CMS.Helpers">
       <HintPath>..\CMS\Bin\CMS.Helpers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CMS.Localization">
+      <HintPath>..\CMS\Bin\CMS.Localization.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CMS.MacroEngine">
@@ -118,9 +118,9 @@
       <HintPath>..\CMS\Bin\CMS.WinServiceEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CMS\Bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\CMS\CMSDependencies\Newtonsoft.Json.6.0.0.0\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -128,7 +128,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CMS\bin\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\CMS\CMSDependencies\System.Net.Http.Formatting.5.2.2.0\System.Net.Http.Formatting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.ServiceProcess" />
@@ -145,16 +145,16 @@
     <Compile Include="CustomMetric\CustomMetricInfoProvider.cs" />
     <Compile Include="CustomMetric\ICustomMetric.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Metrics\MetricsProcessor.cs" />
     <Compile Include="Metrics\Metric.cs" />
     <Compile Include="Metrics\MetricDataEnum.cs" />
     <Compile Include="Metrics\Metrics.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Metrics\MetricsProvider.cs" />
-    <Compile Include="SupportHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupportHelper.cs" />
     <Compile Include="SupportHelperModule.cs" />
-    <Compile Include="Metrics\MetricsProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

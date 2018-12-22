@@ -6,16 +6,16 @@ using CMS.MacroEngine;
 
 namespace SupportHelper
 {
-    public class SupportHelperModule : Module
-    {
-        public SupportHelperModule()
-            : base("SupportHelperModule", true)
-        {
-        }
+	public class SupportHelperModule : Module
+	{
+		public SupportHelperModule()
+			: base("SupportHelperModule", true)
+		{
+		}
 
-        protected override void OnInit()
-        {
-            MacroContext.GlobalResolver.SetHiddenNamedSourceData("SupportHelper", SupportHelper.Instance);
-        }
-    }
+		protected override void OnInit()
+		{
+			MacroContext.GlobalResolver.SetHiddenNamedSourceData("SupportHelper", SupportHelper.Instance);
+		}
+	}
 }
