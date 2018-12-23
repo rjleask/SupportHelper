@@ -61,18 +61,18 @@ Support helper includes several optional settings that can change how it is used
        - **SupportHelper.dll**
   4. Reference the custom module project from the Kentico web project _(CMSApp_ or _CMS)_.
   5. Edit the custom metric project's **AssemblyInfo.cs** file (in the _Properties_ folder).
-  6. Add the **AssemblyDiscoverable** assembly attribute:
-     ```csharp
-     using CMS;
-     
-     [assembly:AssemblyDiscoverable]
-     ```
-  7. Place the _SupportHelper\_SampleMetric.cs_ file in the custom metric project.
-  8. Use the Kentico API to gather the metric data that you want. By default, the file returns a single field with the string _sample data_. The file also contains templates for returning a list of fields or a list of key-value pairs. For example, a list of fields is used by the **Discovered assemblies** metric and a list of key-value pairs is used by the **Azure settings** metric.
-  9. **Build** the custom module project.
-  10. In the Kentico admin, open **Settings > Integration > Support helper**.
-  11. Click **Add new custom metric** and fill out the form. The metric that you created should be in the **Data class** selector. The **Category** field selects the metric category that you want to include the metric under, as shown in the submission form or listed in the submission data.
-  12. The metric should now appear in the submission form after clicking **Advanced (metrics)**.
+     - Add the **AssemblyDiscoverable** assembly attribute:
+       ```csharp
+       using CMS;
+       
+       [assembly:AssemblyDiscoverable]
+       ```
+  6. Place the _SupportHelper\_SampleMetric.cs_ file in the custom metric project.
+  7. Use the Kentico API to gather the metric data that you want. By default, the file returns a single field with the string _sample data_. The file also contains templates for returning a list of fields or a list of key-value pairs. For example, a list of fields is used by the **Discovered assemblies** metric and a list of key-value pairs is used by the **Azure settings** metric.
+  8. **Build** the custom module project.
+  9. In the Kentico admin, open **Settings > Integration > Support helper**.
+  10. Click **Add new custom metric** and fill out the form. The metric that you created should be in the **Data class** selector. The **Category** field selects the metric category that you want to include the metric under, as shown in the submission form or listed in the submission data.
+  11. The metric should now appear in the submission form after clicking **Advanced (metrics)**.
 - **Disabled metrics** – By default, all the metrics in Support helper are selected. To disable one or more metrics, add the following key into the _AppSettings_ section of your project's _web.config_ file:
   ```xml
   <add key="SHDisabledMetrics" value="metric1;metric2"/>
@@ -110,15 +110,15 @@ The destination server needs to have a Web API controller that receives the POST
        - **Kentico 10** - this assembly is in _~\CMSDependencies\System.Web.Http.WebHost.5.2.2.0_
    - Alternatively, you can install the **Newtonsoft.Json** and **Microsoft.AspNet.WebApi** packages into the project. If you do, make sure their versions match the ones used by the main Kentico application.
 5. Reference the custom module project from the Kentico web project (_CMSApp_ or _CMS_).
-6. Edit the custom metric project's **AssemblyInfo.cs** file (in the _Properties_ folder).
-7. Add the **AssemblyDiscoverable** assembly attribute:
-   ```csharp
-   using CMS;
-   
-   [assembly:AssemblyDiscoverable]
-   ```
-8. Place the _SupportHelper\_SampleDestination.cs_ file in the custom metric project.
-9. Change the **SUPPORT\_EMAIL** constant to the email that you want to use.
-10. (Optional) Make any other changes to the code, such as the HTTP route in the method **OnInit** of the class **SupportHelperDestinationModule**, the template of the email, any metrics or submission data that are used in the body of the email (by default, the version, category, and email are used), or add any processing to the attachments.
-11. **Build** the custom module project.
-12. The server should now process Support helper submissions.
+6. Edit the module project's **AssemblyInfo.cs** file (in the _Properties_ folder).
+   - Add the **AssemblyDiscoverable** assembly attribute:
+     ```csharp
+     using CMS;
+     
+     [assembly:AssemblyDiscoverable]
+     ```
+7. Place the _SupportHelper\_SampleDestination.cs_ file in the custom metric project.
+8. Change the **SUPPORT\_EMAIL** constant to the email that you want to use.
+9. (Optional) Make any other changes to the code, such as the HTTP route in the method **OnInit** of the class **SupportHelperDestinationModule**, the template of the email, any metrics or submission data that are used in the body of the email (by default, the version, category, and email are used), or add any processing to the attachments.
+10. **Build** the custom module project.
+11. The server should now process Support helper submissions.
