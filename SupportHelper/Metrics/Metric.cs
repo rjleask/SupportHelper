@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Configuration;
 
 using CMS.Activities;
@@ -30,419 +29,462 @@ using Microsoft.Win32;
 
 namespace SupportHelper
 {
+    /// <summary>
+    /// DataRow that stores Metric metadata.
+    /// </summary>
 	public class Metric : DataRow
-	{
-		private const int CUTOFF = 500;
+    {
+        private const int CUTOFF = 500;
 
-		#region Constructors
-		public Metric(DataRowBuilder builder) : base(builder)
-		{
-		}
+        #region Constructors
 
-		#endregion
+        public Metric(DataRowBuilder builder) : base(builder)
+        {
+        }
 
-		#region Properties
+        #endregion Constructors
 
-		public int MetricId { get; set; }
+        #region Properties
 
-		public string MetricDisplayName
-		{
-			get
-			{
-				return ResHelper.GetString(MetricCodeName);
-			}
-		}
+        public int MetricId { get; set; }
 
-		internal string MetricCodeName { get; set; }
+        public string MetricDisplayName
+        {
+            get
+            {
+                return ResHelper.GetString(MetricCodeName);
+            }
+        }
 
-		public Metric MetricParent { get; set; }
+        internal string MetricCodeName { get; set; }
 
-		public bool MetricHasChildren
-		{
-			get
-			{
-				// The Metrics object is meant to be a three-level structure, so either the parent is null or the grandparent is null
-				return (MetricParent == null || MetricParent.MetricParent == null) ? true : false;
-			}
-		}
+        public Metric MetricParent { get; set; }
 
-		public bool MetricSelected { get; set; }
+        public bool MetricHasChildren
+        {
+            get
+            {
+                // The Metrics object is meant to be a three-level structure, so either the parent is null or the grandparent is null
+                return (MetricParent == null || MetricParent.MetricParent == null) ? true : false;
+            }
+        }
 
-		public string MetricAssemblyName { get; set; }
+        public bool MetricSelected { get; set; }
 
-		public string MetricClassName { get; set; }
+        public string MetricAssemblyName { get; set; }
 
-		public string MetricPath { get; internal set; }
+        public string MetricClassName { get; set; }
 
-		internal IEnumerable<KeyValuePair<string, string>> MetricData
-		{
-			get
-			{
-				if (MetricClassName != null && MetricAssemblyName != null)
-				{
-					try
-					{
-						return (ClassHelper.GetClass(MetricAssemblyName, MetricClassName) as ICustomMetric).GetCustomMetricData();
-					}
-					catch (Exception ex)
-					{
+        public string MetricPath { get; internal set; }
 
-						throw ex;
-					}
-				}
+        internal IEnumerable<KeyValuePair<string, string>> MetricData
+        {
+            get
+            {
+                if (MetricClassName != null && MetricAssemblyName != null)
+                {
+                    try
+                    {
+                        return (ClassHelper.GetClass(MetricAssemblyName, MetricClassName) as ICustomMetric).GetCustomMetricData();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
 
-				return GetMetricData();
-			}
-		}
+                return GetMetricData();
+            }
+        }
 
-		internal System.Collections.Specialized.NameValueCollection MetricServerVariables { get; set; }
+        internal System.Collections.Specialized.NameValueCollection MetricServerVariables { get; set; }
 
-		#endregion
+        #endregion Properties
 
-		#region Methods
+        #region Methods
 
-		private IEnumerable<KeyValuePair<string, string>> GetMetricData()
-		{
-			string stringData = null;
-			IEnumerable<KeyValuePair<string, string>> tupleData = null;
+        private IEnumerable<KeyValuePair<string, string>> GetMetricData()
+        {
+            string stringData = null;
+            IEnumerable<KeyValuePair<string, string>> tupleData = null;
 
-			// Gather data for each row, return special message if data is null
-			switch (MetricCodeName)
-			{
-				// Categories
-				case MetricDataEnum.support_metrics:
-				case MetricDataEnum.support_metrics_system:
-				case MetricDataEnum.support_metrics_environment:
-				case MetricDataEnum.support_metrics_counters:
-				case MetricDataEnum.support_metrics_ecommerce:
-				case MetricDataEnum.support_metrics_tasks:
-				case MetricDataEnum.support_metrics_eventlog:
-					return null;
+            // Gather data for each row, return special message if data is null
+            switch (MetricCodeName)
+            {
+                // Categories
+                case MetricDataEnum.support_metrics:
+                case MetricDataEnum.support_metrics_system:
+                case MetricDataEnum.support_metrics_environment:
+                case MetricDataEnum.support_metrics_counters:
+                case MetricDataEnum.support_metrics_ecommerce:
+                case MetricDataEnum.support_metrics_tasks:
+                case MetricDataEnum.support_metrics_eventlog:
+                    return null;
 
-				#region System
+                #region System
 
-				case MetricDataEnum.support_metrics_system_version:
-					stringData = CMSVersion.GetVersion(true, true, true, true);
-					break;
-				case MetricDataEnum.support_metrics_system_appname:
-					stringData = SettingsHelper.AppSettings["CMSApplicationName"];
-					break;
-				case MetricDataEnum.support_metrics_system_instancename:
-					stringData = SystemContext.InstanceName;
-					break;
-				case MetricDataEnum.support_metrics_system_physicalpath:
-					stringData = SystemContext.WebApplicationPhysicalPath;
-					break;
-				case MetricDataEnum.support_metrics_system_apppath:
-					stringData = SystemContext.ApplicationPath;
-					break;
-				case MetricDataEnum.support_metrics_system_uiculture:
-					stringData = LocalizationContext.CurrentUICulture.CultureName;
-					break;
-				case MetricDataEnum.support_metrics_system_installtype:
-					stringData = SystemContext.IsWebApplicationProject ? "Web App" : "Web site";
-					break;
-				case MetricDataEnum.support_metrics_system_portaltemplatepage:
-					stringData = URLHelper.PortalTemplatePage;
-					break;
-				case MetricDataEnum.support_metrics_system_timesinceapprestart:
-					stringData = (DateTime.Now - CMSApplication.ApplicationStart).ToString(@"dd\:hh\:mm\:ss");
-					break;
-				case MetricDataEnum.support_metrics_system_discoveredassemblies:
-					tupleData = AssemblyDiscoveryHelper.GetAssemblies(true).Select((a, i) => GetKeyValuePair(i, a.FullName));
-					break;
-				case MetricDataEnum.support_metrics_system_targetframework:
-					HttpRuntimeSection httpRuntime = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
-					stringData = httpRuntime.TargetFramework;
-					break;
-				case MetricDataEnum.support_metrics_system_authmode:
-					AuthenticationSection Authentication = ConfigurationManager.GetSection("system.web/authentication") as AuthenticationSection;
-					stringData = Authentication?.Mode.ToString();
-					break;
-				case MetricDataEnum.support_metrics_system_sessionmode:
-					SessionStateSection SessionState = ConfigurationManager.GetSection("system.web/sessionState") as SessionStateSection;
-					stringData = SessionState?.Mode.ToString();
-					break;
-				case MetricDataEnum.support_metrics_system_debugmode:
-					CompilationSection Compilation = ConfigurationManager.GetSection("system.web/compilation") as CompilationSection;
-					stringData = Compilation?.Debug.ToString();
-					break;
-				case MetricDataEnum.support_metrics_system_runallmanagedmodules:
-					var xmlDoc = new System.Xml.XmlDocument();
-					xmlDoc.Load(URLHelper.GetPhysicalPath("~/Web.config"));
-					stringData = xmlDoc.SelectSingleNode("/configuration/system.webServer/modules").Attributes["runAllManagedModulesForAllRequests"]?.Value;
-					break;
+                case MetricDataEnum.support_metrics_system_version:
+                    stringData = CMSVersion.GetVersion(true, true, true, true);
+                    break;
 
-				#endregion
+                case MetricDataEnum.support_metrics_system_appname:
+                    stringData = SettingsHelper.AppSettings["CMSApplicationName"];
+                    break;
 
-				#region Environment
+                case MetricDataEnum.support_metrics_system_instancename:
+                    stringData = SystemContext.InstanceName;
+                    break;
 
-				case MetricDataEnum.support_metrics_environment_trustlevel:
-					stringData = SystemContext.CurrentTrustLevel.ToString();
-					break;
-				case MetricDataEnum.support_metrics_environment_iisversion:
-					stringData = MetricServerVariables["SERVER_SOFTWARE"];
-					break;
-				case MetricDataEnum.support_metrics_environment_https:
-					stringData = MetricServerVariables["HTTPS"];
-					break;
-				case MetricDataEnum.support_metrics_environment_windowsversion:
-					using (RegistryKey versionKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
-					{
-						var productName = versionKey?.GetValue("ProductName");
-						var currentBuild = versionKey?.GetValue("CurrentBuild");
-						var releaseId = versionKey?.GetValue("ReleaseId");
+                case MetricDataEnum.support_metrics_system_physicalpath:
+                    stringData = SystemContext.WebApplicationPhysicalPath;
+                    break;
 
-						stringData = String.Format("{0}, build {1}, release {2}", productName.ToString(), currentBuild.ToString(), releaseId.ToString());
-					}
-					break;
-				case MetricDataEnum.support_metrics_environment_netversion:
-					using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
-					{
-						var keyValue = ndpKey?.GetValue("Release");
-						if (keyValue != null)
-						{
-							var releaseKey = (int)keyValue;
-							if (releaseKey >= 461808) { stringData = "4.7.2 or later"; }
-							else
-							if (releaseKey >= 461308) { stringData = "4.7.1"; }
-							else
-							if (releaseKey >= 460798) { stringData = "4.7"; }
-							else
-							if (releaseKey >= 394802) { stringData = "4.6.2"; }
-							else
-							if (releaseKey >= 394254) { stringData = "4.6.1"; }
-							else
-							if (releaseKey >= 393295) { stringData = "4.6"; }
-							else
-							if (releaseKey >= 379893) { stringData = "4.5.2"; }
-							else
-							if (releaseKey >= 378675) { stringData = "4.5.1"; }
-							else
-							if (releaseKey >= 378389) { stringData = "4.5"; }
-						}
-					}
-					break;
-				case MetricDataEnum.support_metrics_environment_sqlserverversion:
-					var dtm = new TableManager(null);
-					stringData = dtm.DatabaseServerVersion;
-					break;
-				case MetricDataEnum.support_metrics_environment_azure:
-					var azureStats = new Dictionary<string, string>(4)
-					{
-						{ "Is a Cloud Service", (SettingsHelper.AppSettings["CMSAzureProject"] == "true").ToString("false") },
-						{ "Is file system on Azure", (SettingsHelper.AppSettings["CMSExternalStorageName"] == "azure").ToString("false") },
-						{ "Azure storage account", SettingsHelper.AppSettings["CMSAzureAccountName"] ?? String.Empty },
-						{ "Azure CDN endpoint", SettingsHelper.AppSettings["CMSAzureCDNEndpoint"] ?? String.Empty }
-					};
+                case MetricDataEnum.support_metrics_system_apppath:
+                    stringData = SystemContext.ApplicationPath;
+                    break;
 
-					tupleData = azureStats.Select(s => GetKeyValuePair(s.Key, s.Value));
-					break;
-				case MetricDataEnum.support_metrics_environment_amazon:
-					var amazonStats = new Dictionary<string, string>(3)
-						{
-							{ "Is file system on Amazon", (SettingsHelper.AppSettings["CMSExternalStorageName"] == "amazon").ToString() },
-							{ "Amazon bucket name", SettingsHelper.AppSettings["CMSAmazonBucketName"] ?? String.Empty },
-							{ "Amazon public access", SettingsHelper.AppSettings["CMSAmazonPublicAccess"] ?? String.Empty },
-						};
+                case MetricDataEnum.support_metrics_system_uiculture:
+                    stringData = LocalizationContext.CurrentUICulture.CultureName;
+                    break;
 
-					tupleData = amazonStats.Select(s => GetKeyValuePair(s.Key, s.Value));
-					break;
-				case MetricDataEnum.support_metrics_environment_services:
-					tupleData = ServiceManager.GetServices().Select(s => GetKeyValuePair(s.ServiceName, s.Status));					
-					break; 
+                case MetricDataEnum.support_metrics_system_installtype:
+                    stringData = SystemContext.IsWebApplicationProject ? "Web App" : "Web site";
+                    break;
 
-				#endregion
+                case MetricDataEnum.support_metrics_system_portaltemplatepage:
+                    stringData = URLHelper.PortalTemplatePage;
+                    break;
 
-				#region Counters
+                case MetricDataEnum.support_metrics_system_timesinceapprestart:
+                    stringData = (DateTime.Now - CMSApplication.ApplicationStart).ToString(@"dd\:hh\:mm\:ss");
+                    break;
 
-				case MetricDataEnum.support_metrics_counters_webfarmservers:
-					stringData = CoreServices.WebFarm.GetEnabledServerNames().Count().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_stagingservers:
-					stringData = ServerInfoProvider.GetServers().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_pagemostchildren:
-					CMS.DocumentEngine.TreeProvider tree = new CMS.DocumentEngine.TreeProvider();
+                case MetricDataEnum.support_metrics_system_discoveredassemblies:
+                    tupleData = AssemblyDiscoveryHelper.GetAssemblies(true).Select((a, i) => GetKeyValuePair(i, a.FullName));
+                    break;
 
-					var pageWithMostChildren = tree.SelectNodes().OnCurrentSite().Published()
-													.ToDictionary(n => n, n => n.Children.Count)
-													.Aggregate((l, r) => l.Value > r.Value ? l : r);
+                case MetricDataEnum.support_metrics_system_targetframework:
+                    HttpRuntimeSection httpRuntime = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+                    stringData = httpRuntime.TargetFramework;
+                    break;
 
-					tupleData = new[] { GetKeyValuePair(URLHelper.GetAbsoluteUrl("~" + pageWithMostChildren.Key.NodeAliasPath), pageWithMostChildren.Value) };
-					break;
-				case MetricDataEnum.support_metrics_counters_modules:
-					stringData = ResourceInfoProvider.GetResources().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_medialibraries:
-					stringData = MediaLibraryInfoProvider.GetMediaLibraries().WhereNull("LibraryGroupID").GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_activities:
-					stringData = ActivityInfoProvider.GetActivities().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_contacts:
-					stringData = ContactInfoProvider.GetContacts().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_contactgroups:
-					stringData = ContactGroupInfoProvider.GetContactGroups().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_omrules:
-					stringData = RuleInfoProvider.GetRules().GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_counters_products:
-					stringData = SKUInfoProvider.GetSKUs(SiteContext.CurrentSiteID).WhereNull("SKUOptionCategoryID").GetCount().ToString();
-					break;
+                case MetricDataEnum.support_metrics_system_authmode:
+                    AuthenticationSection Authentication = ConfigurationManager.GetSection("system.web/authentication") as AuthenticationSection;
+                    stringData = Authentication?.Mode.ToString();
+                    break;
 
-				#endregion
+                case MetricDataEnum.support_metrics_system_sessionmode:
+                    SessionStateSection SessionState = ConfigurationManager.GetSection("system.web/sessionState") as SessionStateSection;
+                    stringData = SessionState?.Mode.ToString();
+                    break;
 
-				#region Tasks
+                case MetricDataEnum.support_metrics_system_debugmode:
+                    CompilationSection Compilation = ConfigurationManager.GetSection("system.web/compilation") as CompilationSection;
+                    stringData = Compilation?.Debug.ToString();
+                    break;
 
-				case MetricDataEnum.support_metrics_tasks_webfarm:
-					stringData = WebFarmTaskInfoProvider.GetWebFarmTasks()
-						   .WhereLessThan("TaskCreated", DateTime.Now.AddDays(-1))
-						   .GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_tasks_staging:
-					stringData = StagingTaskInfoProvider.GetTasks()
-						   .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
-						   .GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_tasks_integration:
-					stringData = IntegrationTaskInfoProvider.GetIntegrationTasks()
-						   .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
-						   .GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_tasks_scheduled:
-					stringData = TaskInfoProvider.GetTasks()
-							.WhereTrue("TaskDeleteAfterLastRun")
-						   .WhereLessThan("TaskNextRunTime", DateTime.Now.AddDays(-1))
-						   .GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_tasks_search:
-					stringData = SearchTaskInfoProvider.GetSearchTasks()
-						   .WhereLessThan("SearchTaskCreated", DateTime.Now.AddDays(-1))
-						   .GetCount().ToString();
-					break;
-				case MetricDataEnum.support_metrics_tasks_email:
-					stringData = EmailInfoProvider.GetEmailCount("EmailStatus = 1 AND EmailLastSendResult IS NOT NULL").ToString();
-					break;
+                case MetricDataEnum.support_metrics_system_runallmanagedmodules:
+                    var xmlDoc = new System.Xml.XmlDocument();
+                    xmlDoc.Load(URLHelper.GetPhysicalPath("~/Web.config"));
+                    stringData = xmlDoc.SelectSingleNode("/configuration/system.webServer/modules").Attributes["runAllManagedModulesForAllRequests"]?.Value;
+                    break;
 
-				#endregion
+                #endregion System
 
-				#region Event log
+                #region Environment
 
-				case MetricDataEnum.support_metrics_eventlog_macroerrors:
-					var macroErrors = EventLogProvider.GetEvents()
-									.WhereEquals("Source", "MacroResolver")
-									.WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
-									.OrderByDescending("EventTime")
-									.TopN(10);
+                case MetricDataEnum.support_metrics_environment_trustlevel:
+                    stringData = SystemContext.CurrentTrustLevel.ToString();
+                    break;
 
-					tupleData = macroErrors.Select(e =>
-									GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																						e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);
-					break;
-				case MetricDataEnum.support_metrics_eventlog_stagingerrors:
-					var stagingErrors = EventLogProvider.GetEvents()
-									.WhereEquals("Source", "staging")
-									.WhereIn("EventType", new [] { "E", "W" })
-									.WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
-									.OrderByDescending("EventTime")
-									.TopN(10);
+                case MetricDataEnum.support_metrics_environment_iisversion:
+                    stringData = MetricServerVariables["SERVER_SOFTWARE"];
+                    break;
 
-					tupleData = stagingErrors.Select(e =>
-									GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																						e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);
-					break;
-				case MetricDataEnum.support_metrics_eventlog_searcherrors:
-					var searchErrors = EventLogProvider.GetEvents()
-									.WhereEquals("Source", "search")
-									.WhereIn("EventType", new [] { "E", "W" })
-									.WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
-									.OrderByDescending("EventTime")
-									.TopN(10);
+                case MetricDataEnum.support_metrics_environment_https:
+                    stringData = MetricServerVariables["HTTPS"];
+                    break;
 
-					tupleData = searchErrors.Select(e =>
-									GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																						e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);
-					break;
-				case MetricDataEnum.support_metrics_eventlog_contenterrors:
-					var contentErrors = EventLogProvider.GetEvents()
-									.WhereEquals("Source", "content")
-									.WhereIn("EventType", new [] { "E", "W" })
-									.WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
-									.OrderByDescending("EventTime")
-									.TopN(10);
+                case MetricDataEnum.support_metrics_environment_windowsversion:
+                    using (RegistryKey versionKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
+                    {
+                        var productName = versionKey?.GetValue("ProductName");
+                        var currentBuild = versionKey?.GetValue("CurrentBuild");
+                        var releaseId = versionKey?.GetValue("ReleaseId");
 
-					tupleData = contentErrors.Select(e =>
-									GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																						e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);
-					break;
-				case MetricDataEnum.support_metrics_eventlog_exceptions:
-					var exceptions = EventLogProvider.GetEvents()
-									.WhereEquals("EventCode", "exception")
-									.WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
-									.OrderByDescending("EventTime")
-									.TopN(10);
+                        stringData = String.Format("{0}, build {1}, release {2}", productName.ToString(), currentBuild.ToString(), releaseId.ToString());
+                    }
+                    break;
 
-					tupleData = exceptions.Select(e =>
-									GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																						e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);
-					break;
-				case MetricDataEnum.support_metrics_eventlog_upgrade:
+                case MetricDataEnum.support_metrics_environment_netversion:
+                    using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
+                    {
+                        var keyValue = ndpKey?.GetValue("Release");
+                        if (keyValue != null)
+                        {
+                            var releaseKey = (int)keyValue;
+                            if (releaseKey >= 461808) { stringData = "4.7.2 or later"; }
+                            else
+                            if (releaseKey >= 461308) { stringData = "4.7.1"; }
+                            else
+                            if (releaseKey >= 460798) { stringData = "4.7"; }
+                            else
+                            if (releaseKey >= 394802) { stringData = "4.6.2"; }
+                            else
+                            if (releaseKey >= 394254) { stringData = "4.6.1"; }
+                            else
+                            if (releaseKey >= 393295) { stringData = "4.6"; }
+                            else
+                            if (releaseKey >= 379893) { stringData = "4.5.2"; }
+                            else
+                            if (releaseKey >= 378675) { stringData = "4.5.1"; }
+                            else
+                            if (releaseKey >= 378389) { stringData = "4.5"; }
+                        }
+                    }
+                    break;
 
-					EventLogInfo upgrade = EventLogProvider.GetEvents().WhereLike("Source", "upgrade%").FirstObject;
-					var version = upgrade?.Source.Split(' ')[2];
+                case MetricDataEnum.support_metrics_environment_sqlserverversion:
+                    var dtm = new TableManager(null);
+                    stringData = dtm.DatabaseServerVersion;
+                    break;
 
-					if (!String.IsNullOrEmpty(version))
-					{
-						var parameters = new QueryDataParameters
-						{
-							{ "@versionnumber", version }
-						};
+                case MetricDataEnum.support_metrics_environment_azure:
+                    var azureStats = new Dictionary<string, string>(4)
+                    {
+                        { "Is a Cloud Service", (SettingsHelper.AppSettings["CMSAzureProject"] == "true").ToString("false") },
+                        { "Is file system on Azure", (SettingsHelper.AppSettings["CMSExternalStorageName"] == "azure").ToString("false") },
+                        { "Azure storage account", SettingsHelper.AppSettings["CMSAzureAccountName"] ?? String.Empty },
+                        { "Azure CDN endpoint", SettingsHelper.AppSettings["CMSAzureCDNEndpoint"] ?? String.Empty }
+                    };
 
-						var events = ConnectionHelper.ExecuteQuery("SupportHelper.CustomMetric.checkupgrade", parameters);
+                    tupleData = azureStats.Select(s => GetKeyValuePair(s.Key, s.Value));
+                    break;
 
-						tupleData = (from DataRow row in events.Tables[0]?.Rows select row)
-									.Select(r => new EventLogInfo(r)).Select(e =>
-										GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
-																							e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
-								);						
-					}
-					break; 
+                case MetricDataEnum.support_metrics_environment_amazon:
+                    var amazonStats = new Dictionary<string, string>(3)
+                        {
+                            { "Is file system on Amazon", (SettingsHelper.AppSettings["CMSExternalStorageName"] == "amazon").ToString() },
+                            { "Amazon bucket name", SettingsHelper.AppSettings["CMSAmazonBucketName"] ?? String.Empty },
+                            { "Amazon public access", SettingsHelper.AppSettings["CMSAmazonPublicAccess"] ?? String.Empty },
+                        };
 
-					#endregion
-			}
+                    tupleData = amazonStats.Select(s => GetKeyValuePair(s.Key, s.Value));
+                    break;
 
-			if (tupleData?.Count() > 0)
-			{
-				return tupleData;
-			}
+                case MetricDataEnum.support_metrics_environment_services:
+                    tupleData = ServiceManager.GetServices().Select(s => GetKeyValuePair(s.ServiceName, s.Status));
+                    break;
 
-			if (stringData != null)
-			{
-				return new[] { GetKeyValuePair(0, stringData) };
-			}
+                #endregion Environment
 
-			return new [] { GetKeyValuePair(0, ResHelper.GetStringFormat("support.metrics.invalid", MetricDisplayName, MetricCodeName)) };
-		}
+                #region Counters
 
-		private KeyValuePair<string, string> GetKeyValuePair(object key, object value)
-		{
-			return new KeyValuePair<string, string>(key.ToString(), value.ToString());
-		}
+                case MetricDataEnum.support_metrics_counters_webfarmservers:
+                    stringData = CoreServices.WebFarm.GetEnabledServerNames().Count().ToString();
+                    break;
 
-		public override string ToString()
-		{
-			return MetricCodeName;
-		}
+                case MetricDataEnum.support_metrics_counters_stagingservers:
+                    stringData = ServerInfoProvider.GetServers().GetCount().ToString();
+                    break;
 
+                case MetricDataEnum.support_metrics_counters_pagemostchildren:
+                    CMS.DocumentEngine.TreeProvider tree = new CMS.DocumentEngine.TreeProvider();
 
-		#endregion
-	}
+                    var pageWithMostChildren = tree.SelectNodes().OnCurrentSite().Published()
+                                                    .ToDictionary(n => n, n => n.Children.Count)
+                                                    .Aggregate((l, r) => l.Value > r.Value ? l : r);
+
+                    tupleData = new[] { GetKeyValuePair(URLHelper.GetAbsoluteUrl("~" + pageWithMostChildren.Key.NodeAliasPath), pageWithMostChildren.Value) };
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_modules:
+                    stringData = ResourceInfoProvider.GetResources().GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_medialibraries:
+                    stringData = MediaLibraryInfoProvider.GetMediaLibraries().WhereNull("LibraryGroupID").GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_activities:
+                    stringData = ActivityInfoProvider.GetActivities().GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_contacts:
+                    stringData = ContactInfoProvider.GetContacts().GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_contactgroups:
+                    stringData = ContactGroupInfoProvider.GetContactGroups().GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_omrules:
+                    stringData = RuleInfoProvider.GetRules().GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_counters_products:
+                    stringData = SKUInfoProvider.GetSKUs(SiteContext.CurrentSiteID).WhereNull("SKUOptionCategoryID").GetCount().ToString();
+                    break;
+
+                #endregion Counters
+
+                #region Tasks
+
+                case MetricDataEnum.support_metrics_tasks_webfarm:
+                    stringData = WebFarmTaskInfoProvider.GetWebFarmTasks()
+                           .WhereLessThan("TaskCreated", DateTime.Now.AddDays(-1))
+                           .GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_tasks_staging:
+                    stringData = StagingTaskInfoProvider.GetTasks()
+                           .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
+                           .GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_tasks_integration:
+                    stringData = IntegrationTaskInfoProvider.GetIntegrationTasks()
+                           .WhereLessThan("TaskTime", DateTime.Now.AddDays(-1))
+                           .GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_tasks_scheduled:
+                    stringData = TaskInfoProvider.GetTasks()
+                            .WhereTrue("TaskDeleteAfterLastRun")
+                           .WhereLessThan("TaskNextRunTime", DateTime.Now.AddDays(-1))
+                           .GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_tasks_search:
+                    stringData = SearchTaskInfoProvider.GetSearchTasks()
+                           .WhereLessThan("SearchTaskCreated", DateTime.Now.AddDays(-1))
+                           .GetCount().ToString();
+                    break;
+
+                case MetricDataEnum.support_metrics_tasks_email:
+                    stringData = EmailInfoProvider.GetEmailCount("EmailStatus = 1 AND EmailLastSendResult IS NOT NULL").ToString();
+                    break;
+
+                #endregion Tasks
+
+                #region Event log
+
+                case MetricDataEnum.support_metrics_eventlog_macroerrors:
+                    var macroErrors = EventLogProvider.GetEvents()
+                                    .WhereEquals("Source", "MacroResolver")
+                                    .WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
+                                    .OrderByDescending("EventTime")
+                                    .TopN(10);
+
+                    tupleData = macroErrors.Select(e =>
+                                    GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                        e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    break;
+
+                case MetricDataEnum.support_metrics_eventlog_stagingerrors:
+                    var stagingErrors = EventLogProvider.GetEvents()
+                                    .WhereEquals("Source", "staging")
+                                    .WhereIn("EventType", new[] { "E", "W" })
+                                    .WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
+                                    .OrderByDescending("EventTime")
+                                    .TopN(10);
+
+                    tupleData = stagingErrors.Select(e =>
+                                    GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                        e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    break;
+
+                case MetricDataEnum.support_metrics_eventlog_searcherrors:
+                    var searchErrors = EventLogProvider.GetEvents()
+                                    .WhereEquals("Source", "search")
+                                    .WhereIn("EventType", new[] { "E", "W" })
+                                    .WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
+                                    .OrderByDescending("EventTime")
+                                    .TopN(10);
+
+                    tupleData = searchErrors.Select(e =>
+                                    GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                        e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    break;
+
+                case MetricDataEnum.support_metrics_eventlog_contenterrors:
+                    var contentErrors = EventLogProvider.GetEvents()
+                                    .WhereEquals("Source", "content")
+                                    .WhereIn("EventType", new[] { "E", "W" })
+                                    .WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
+                                    .OrderByDescending("EventTime")
+                                    .TopN(10);
+
+                    tupleData = contentErrors.Select(e =>
+                                    GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                        e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    break;
+
+                case MetricDataEnum.support_metrics_eventlog_exceptions:
+                    var exceptions = EventLogProvider.GetEvents()
+                                    .WhereEquals("EventCode", "exception")
+                                    .WhereGreaterThan("EventTime", DateTime.Now.Subtract(TimeSpan.FromDays(7)))
+                                    .OrderByDescending("EventTime")
+                                    .TopN(10);
+
+                    tupleData = exceptions.Select(e =>
+                                    GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                        e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    break;
+
+                case MetricDataEnum.support_metrics_eventlog_upgrade:
+
+                    EventLogInfo upgrade = EventLogProvider.GetEvents().WhereLike("Source", "upgrade%").FirstObject;
+                    var version = upgrade?.Source.Split(' ')[2];
+
+                    if (!String.IsNullOrEmpty(version))
+                    {
+                        var parameters = new QueryDataParameters
+                        {
+                            { "@versionnumber", version }
+                        };
+
+                        var events = ConnectionHelper.ExecuteQuery("SupportHelper.CustomMetric.checkupgrade", parameters);
+
+                        tupleData = (from DataRow row in events.Tables[0]?.Rows select row)
+                                    .Select(r => new EventLogInfo(r)).Select(e =>
+                                        GetKeyValuePair(String.Format("{0} from {1} at {2} in {3}", e.EventCode, e.Source, e.EventTime, e.EventMachineName),
+                                                                                            e.EventDescription.Length > CUTOFF ? e.EventDescription.Substring(0, CUTOFF) : e.EventDescription)
+                                );
+                    }
+                    break;
+
+                    #endregion Event log
+            }
+
+            if (tupleData?.Count() > 0)
+            {
+                return tupleData;
+            }
+
+            if (stringData != null)
+            {
+                return new[] { GetKeyValuePair(0, stringData) };
+            }
+
+            return new[] { GetKeyValuePair(0, ResHelper.GetStringFormat("support.metrics.invalid", MetricDisplayName, MetricCodeName)) };
+        }
+
+        private KeyValuePair<string, string> GetKeyValuePair(object key, object value)
+        {
+            return new KeyValuePair<string, string>(key.ToString(), value.ToString());
+        }
+
+        public override string ToString()
+        {
+            return MetricCodeName;
+        }
+
+        #endregion Methods
+    }
 }
