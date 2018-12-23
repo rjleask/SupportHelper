@@ -197,41 +197,33 @@ namespace SupportHelper
 
                 case MetricDataEnum.support_metrics_environment_trustlevel:
 
-                    AspNetHostingPermissionLevel trustLevel;
+                    AspNetHostingPermissionLevel trustLevel = AspNetHostingPermissionLevel.None;
 
                     if (!SystemContext.IsWebSite)
                     {
                         trustLevel = AspNetHostingPermissionLevel.Unrestricted;
                     }
 
-                    try
-                    {
-                        // Check the trust level by evaluation of levels
-                        foreach (AspNetHostingPermissionLevel permissionLevel in new[] {
+                    // Check the trust level by evaluation of levels
+                    foreach (AspNetHostingPermissionLevel permissionLevel in new[] {
                             AspNetHostingPermissionLevel.Unrestricted,
                             AspNetHostingPermissionLevel.High,
                             AspNetHostingPermissionLevel.Medium,
                             AspNetHostingPermissionLevel.Low,
                             AspNetHostingPermissionLevel.Minimal
                         })
+                    {
+                        try
                         {
-                            try
-                            {
-                                new AspNetHostingPermission(permissionLevel).Demand();
-                            }
-                            catch (SecurityException)
-                            {
-                                continue;
-                            }
-
-                            trustLevel = permissionLevel;
+                            new AspNetHostingPermission(permissionLevel).Demand();
+                        }
+                        catch (SecurityException)
+                        {
+                            continue;
                         }
 
-                        trustLevel = AspNetHostingPermissionLevel.None;
-                    }
-                    catch
-                    {
-                        trustLevel = AspNetHostingPermissionLevel.None;
+                        trustLevel = permissionLevel;
+                        break;
                     }
 
                     stringData = trustLevel.ToString();
@@ -479,7 +471,7 @@ namespace SupportHelper
 
                 case MetricDataEnum.support_metrics_eventlog_upgrade:
 
-                    EventLogInfo upgrade = EventLogProvider.GetEvents().WhereLike("Source", "upgrade%").FirstObject;
+                    EventLogInfo upgrade = EventLogProvider.GetEvents().WhereLike("Source", "upgrade%").FirstOrDefault();
                     var version = upgrade?.Source.Split(' ')[2];
 
                     if (!String.IsNullOrEmpty(version))

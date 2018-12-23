@@ -5,7 +5,7 @@ using CMS.Helpers;
 
 namespace SupportHelper
 {
-    public static class Extensions
+    public static class MultipartFormDataContentExtensions
     {
         /// <summary>
         /// Adds <see cref="byte[]"/> submission item to given MultipartFormDataContent submission.

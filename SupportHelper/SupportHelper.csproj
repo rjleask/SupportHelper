@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SupportHelper.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -86,10 +87,6 @@
       <HintPath>..\CMS\Bin\CMS.MediaLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CMS.Modules">
-      <HintPath>..\CMS\Bin\CMS.Modules.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="CMS.Scheduler">
       <HintPath>..\CMS\Bin\CMS.Scheduler.dll</HintPath>
       <Private>False</Private>
@@ -144,7 +141,7 @@
     <Compile Include="CustomMetric\CustomMetricInfo.cs" />
     <Compile Include="CustomMetric\CustomMetricInfoProvider.cs" />
     <Compile Include="CustomMetric\ICustomMetric.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="MultipartFormDataContentExtensions.cs" />
     <Compile Include="Metrics\Metric.cs" />
     <Compile Include="Metrics\MetricDataEnum.cs" />
     <Compile Include="Metrics\Metrics.cs">
@@ -155,6 +152,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupportHelperModule.cs" />
     <Compile Include="Metrics\MetricsProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Modules.csproj">
+      <Project>{6bdc71f9-7a04-45da-8821-1246ec51e3ce}</Project>
+      <Name>Modules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

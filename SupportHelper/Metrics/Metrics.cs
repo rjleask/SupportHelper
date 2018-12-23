@@ -347,13 +347,18 @@ namespace SupportHelper
 
             StringBuilder log = new StringBuilder();
 
-            log.AppendFormat("Endpoint: {0}{1}", Endpoint, Environment.NewLine);
+            log.AppendLine($"Endpoint: {Endpoint}");
 
-            log.AppendFormat("Disabled metrics: {0}{1}", ValidationHelper.GetString(SettingsHelper.AppSettings["SHDisabledMetrics"], String.Empty), Environment.NewLine);
+            log.AppendLine($"Disabled metrics: {ValidationHelper.GetString(SettingsHelper.AppSettings["SHDisabledMetrics"], String.Empty)}");
 
             var metricsProcessor = new MetricsProcessor(submission);
 
-            log.AppendFormat("{0}{1}", metricsProcessor.JSON, Environment.NewLine);
+            foreach (var field in metricsProcessor.FormFields)
+            {
+                log.AppendLine($"{ResHelper.GetString(field.Key)}: {field.Value.Value}");
+            }
+
+            log.AppendLine($"{metricsProcessor.JSON}");
 
             EventLogProvider.LogInformation("Support helper", "SUBMISSION", log.ToString());
         }

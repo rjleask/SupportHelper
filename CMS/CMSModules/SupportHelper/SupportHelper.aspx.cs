@@ -172,7 +172,7 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected void Submit(object sender, EventArgs e)
+    private void Submit(object sender, EventArgs e)
     {
         // Category is a header (not set)
         AddError(ValidationHelper.GetString(drpCategory.SelectedValue, "header").Contains("header"), lblCategory, GetString("support.category.validation"));
@@ -237,11 +237,7 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         txtCategoryCustom.Visible = drpCategory.SelectedValue == drpCategory.Items[drpCategory.Items.Count - 1].Value;
     }
 
-    /// <summary>
-    /// Set metrics control metrics.
-    /// </summary>
-    /// <returns></returns>
-    protected TreeNode CreateMetricsNode(DataRow childNode, TreeNode createdNode)
+    private TreeNode CreateMetricsNode(DataRow childNode, TreeNode createdNode)
     {
         // Get data
         if (childNode != null)
@@ -317,15 +313,15 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
 
     #region Setup methods
 
-    /// <summary>
-    /// Register CSS tweaks.
-    /// </summary>
     private void RegisterCSS()
     {
         CssRegistration.RegisterCssBlock(this, "SupportHelper", String.Format(@"
 			.ck-link-form .ck-input-text {{
 				width: inherit !important;
 			}}
+            .cms-bootstrap .editing-form-value-cell i {{
+                margin: inherit;
+            }}
 			.cms-bootstrap .ck-editor__editable a:hover,
 			.cms-bootstrap .ck-editor__editable .link:hover,
 			.cms-bootstrap .ck-editor__editable a:focus,
@@ -411,44 +407,44 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         drpCategory.Items.Clear();
 
         drpCategory.Items.AddRange(new ListItem[] {
-            GetCategory("support.category.header.choose", true),
-            GetCategory("support.category.header.application", true),
-            GetCategory("support.category.admin"),
-            GetCategory("support.category.upgrade"),
-            GetCategory("support.category.header.content", true),
-            GetCategory("support.category.pages"),
-            GetCategory("support.category.workflows"),
-            GetCategory("support.category.forms"),
-            GetCategory("support.category.medialibraries"),
-            GetCategory("support.category.localization"),
-            GetCategory("support.category.header.om", true),
-            GetCategory("support.category.contacts"),
-            GetCategory("support.category.campaigns"),
-            GetCategory("support.category.newsletters"),
-            GetCategory("support.category.header.ecommerce", true),
-            GetCategory("support.category.products"),
-            GetCategory("support.category.orders"),
-            GetCategory("support.category.discounts"),
-            GetCategory("support.category.store"),
-            GetCategory("support.category.header.social", true),
-            GetCategory("support.category.events"),
-            GetCategory("support.category.forums"),
-            GetCategory("support.category.blogs"),
-            GetCategory("support.category.header.development", true),
-            GetCategory("support.category.cssjavascript"),
-            GetCategory("support.category.formcontrols"),
-            GetCategory("support.category.webparts"),
-            GetCategory("support.category.modules"),
-            GetCategory("support.category.mvc"),
-            GetCategory("support.category.header.configuration", true),
-            GetCategory("support.category.permissions"),
-            GetCategory("support.category.staging"),
-            GetCategory("support.category.users"),
-            GetCategory("support.category.webfarm"),
-            GetCategory("support.category.sites"),
-            GetCategory("support.category.integrations"),
-            GetCategory("support.category.spacer", true),
-            GetCategory("support.category.custom")
+            BuildCategoryItem("support.category.header.choose", true),
+            BuildCategoryItem("support.category.header.application", true),
+            BuildCategoryItem("support.category.admin"),
+            BuildCategoryItem("support.category.upgrade"),
+            BuildCategoryItem("support.category.header.content", true),
+            BuildCategoryItem("support.category.pages"),
+            BuildCategoryItem("support.category.workflows"),
+            BuildCategoryItem("support.category.forms"),
+            BuildCategoryItem("support.category.medialibraries"),
+            BuildCategoryItem("support.category.localization"),
+            BuildCategoryItem("support.category.header.om", true),
+            BuildCategoryItem("support.category.contacts"),
+            BuildCategoryItem("support.category.campaigns"),
+            BuildCategoryItem("support.category.newsletters"),
+            BuildCategoryItem("support.category.header.ecommerce", true),
+            BuildCategoryItem("support.category.products"),
+            BuildCategoryItem("support.category.orders"),
+            BuildCategoryItem("support.category.discounts"),
+            BuildCategoryItem("support.category.store"),
+            BuildCategoryItem("support.category.header.social", true),
+            BuildCategoryItem("support.category.events"),
+            BuildCategoryItem("support.category.forums"),
+            BuildCategoryItem("support.category.blogs"),
+            BuildCategoryItem("support.category.header.development", true),
+            BuildCategoryItem("support.category.cssjavascript"),
+            BuildCategoryItem("support.category.formcontrols"),
+            BuildCategoryItem("support.category.webparts"),
+            BuildCategoryItem("support.category.modules"),
+            BuildCategoryItem("support.category.mvc"),
+            BuildCategoryItem("support.category.header.configuration", true),
+            BuildCategoryItem("support.category.permissions"),
+            BuildCategoryItem("support.category.staging"),
+            BuildCategoryItem("support.category.users"),
+            BuildCategoryItem("support.category.webfarm"),
+            BuildCategoryItem("support.category.sites"),
+            BuildCategoryItem("support.category.integrations"),
+            BuildCategoryItem("support.category.spacer", true),
+            BuildCategoryItem("support.category.custom")
         });
 
         // Restore selection
@@ -492,9 +488,6 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         }
     }
 
-    /// <summary>
-    /// Register all helper scripts.
-    /// </summary>
     private void RegisterScripts()
     {
         ScriptHelper.RegisterJQuery(this);
@@ -523,7 +516,7 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
 									}}", hdnDescription.ClientID, txtDescription.ClientID));
 
         // CKEditor
-        ScriptHelper.RegisterScriptFile(this, "CMSModules/SupportHelper/ckeditor_balloon_10_0_1.js", false);
+        ScriptHelper.RegisterScriptFile(this, "CMSModules/SupportHelper/ckeditor_balloon_11_2_0.js", false);
         sbs.Append(String.Format(@"if(!document.querySelector('#{0}').hasAttribute('contenteditable')) {{
 			BalloonEditor.create(document.querySelector('#{0}'), {{toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]}}).catch (error => {{console.error(error);}})}};", txtDescription.ClientID));
 
@@ -584,10 +577,7 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
 
     #region Action methods
 
-    /// <summary>
-    /// Generate category option.
-    /// </summary>
-    private ListItem GetCategory(string resourceString, bool header = false)
+    private ListItem BuildCategoryItem(string resourceString, bool header = false)
     {
         ListItem li = new ListItem(String.Format("{0}{1}",
                                     header ? String.Empty : new String((char)160, 3),
@@ -601,9 +591,6 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         return li;
     }
 
-    /// <summary>
-    /// Update metrics so that the child metrics are recursively de/selected.
-    /// </summary>
     private void DeSelectAllMetrics(int parentId, bool select = true)
     {
         // Get parent
@@ -627,10 +614,10 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         }
     }
 
-    public MultipartFormDataContent FillSubmission(ref MultipartFormDataContent submission)
+    private MultipartFormDataContent FillSubmission(ref MultipartFormDataContent submission)
     {
         // Add category
-        string category = ValidationHelper.GetString(drpCategory.SelectedValue, "category").Contains("category") ? GetString(drpCategory.SelectedValue) : ValidationHelper.GetString(txtCategoryCustom.Text, String.Empty);
+        string category = ValidationHelper.GetString(drpCategory.SelectedValue, "Unknown").Contains("custom") ? ValidationHelper.GetString(txtCategoryCustom.Text, String.Empty) : GetString(drpCategory.SelectedValue);
         submission.AddSubmissionItem("support.category", "form", category);
 
         // Add description
@@ -703,7 +690,7 @@ public partial class CMSModules_SupportHelper_SupportHelper : CMSModalPage, ICal
         {
             case 2:
                 // Basic checkbox click
-                id = ValidationHelper.GetInteger(args[0], 0);
+                id = ValidationHelper.GetInteger(args[0], 1) - 1;
 
                 // De/select item
                 Metrics[id].MetricSelected = ValidationHelper.GetBoolean(args[1], false);
