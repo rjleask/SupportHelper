@@ -23,7 +23,7 @@ The following steps describe how to install Support helper on the source server,
    ```xml
    <add key="SHSubmitEndpoint" value="~/supportsubmission/submit"/>
    ```
-   * Replace _~/supportsubmission/submit_ with the full URL to the API controller on the destination server as defined by the destination code. For example, if the destination server has domain _https://example.com_ and you use the sample destination code without any changes, the URL would be _https://example.com/supportsubmission/submit_.
+   * Replace _~/supportsubmission/submit_ with the full URL to the API controller on the destination server as defined by the destination code. For example, if the destination server has domain _https://<span></span>example.com_ and you use the sample destination code without any changes, the URL would be _https://<span></span>example.com/supportsubmission/submit_.
 4. (Optional) Configure additional settings as described in the [Configuring optional settings](#configuring-optional-settings) section.
 5. If your project is installed in the web application format, rebuild the solution.
 6. Configure the destination server as described in the [Configuring the destination server](#configuring-the-destination-server) section.
