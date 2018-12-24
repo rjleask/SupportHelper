@@ -397,7 +397,4 @@ CMS/CMSScripts/CMSModules/*
 !CMS/CMSResources/
 CMS/CMSResources/*
 
-!CMS/CMSResources/
-CMS/CMSResources/*
-
 !CMS/CMSResources/SupportHelper/
