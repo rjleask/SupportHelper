@@ -1,12 +1,12 @@
 # Support helper
 
-Support helper is a rich issue submission form for the Kentico administration interface, meant to replace the existing **Submit a question or bug** link in the help toolbar. It gathers user details, uploaded files, and useful information (metrics) using the Kentico API. It also provides a way to register custom metrics. The data is sent using POST to a destination server.
+Support helper is a rich issue submission form for the Kentico administration interface, meant to replace the existing link **Submit a question or bug** in the help toolbar. It gathers user details, uploaded files, and useful information (metrics) using the Kentico API. It also provides a way to register custom metrics. The data is sent using POST to a destination server.
 
-## Package contents
+## Release contents
 
-Each extension package contains four files:
+Each release contains four files:
 
-- _SupportHelper.1.XX.0.nupkg_ – NuGet package containing the Support helper module and files.
+- _SupportHelper.XX.XX.XX.nupkg_ – NuGet package containing the Support helper module and files.
 - _SupportHelper\_SampleMetric.cs_ – Sample custom metric code.
 - _SupportHelper\_SampleDestination.cs_ – Sample destination server code.
 - _SupportHelper\_MetricCodeNames.txt_ – A list of available metric code names, in the same order as in the Support helper form.
@@ -17,8 +17,13 @@ The following steps describe how to install Support helper on the source server,
 
 1. Open your Kentico solution in Visual Studio (using the **WebSite.sln** or **WebApp.sln** file).
 2. Use the NuGet Package Manager to install the appropriate NuGet package:
-   * **Kentico 10** – _SupportHelper.1.10.0.nupkg_
-   * **Kentico 11** – _SupportHelper.1.11.0.nupkg_
+
+   Kentico version | Release
+   --------------- | -------
+   10 | [Support helper for Kentico 10](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v1.10.1)
+   11 | [Support helper for Kentico 11](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v1.11.1)
+   12 | [Support helper for Kentico 12](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v12.0.0)
+
 3. Add the following key into the _AppSettings_ section of your project's _web.config_ file:
    ```xml
    <add key="SHSubmitEndpoint" value="~/supportsubmission/submit"/>
@@ -88,8 +93,13 @@ The destination server needs to have a Web API controller that receives the POST
 
 1. Open your Kentico solution in Visual Studio (using the **WebSite.sln** or **WebApp.sln** file).
 2. Use the NuGet Package Manager to install the appropriate NuGet package:
-   * **Kentico 10** – _SupportHelper.1.10.0.nupkg_
-   * **Kentico 11** – _SupportHelper.1.11.0.nupkg_
+
+   Kentico version | Release
+   --------------- | -------
+   10 | [Support helper for Kentico 10](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v1.10.1)
+   11 | [Support helper for Kentico 11](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v1.11.1)
+   12 | [Support helper for Kentico 12](https://github.com/yuriys-kentico/SupportHelper/releases/tag/v12.0.0)
+
 3. Create a new _Class Library_ project in the Kentico solution.
 4. Add references to the required Kentico and Support helper libraries (DLLs) for the module project:
    - Right-click the project and select **Add > Reference**.
